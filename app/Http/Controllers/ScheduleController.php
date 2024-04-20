@@ -141,8 +141,9 @@ class ScheduleController extends Controller
         $scheduleCheck = $request->checkAll;
 
         $checkedItems = array_filter($scheduleCheck, function ($item) {
-            return $item['isChecked'] === true;
+            return isset($item['isChecked']) && $item['isChecked'] === true;
         });
+
         $checkedIds = array_column($checkedItems, 'id');
         Schedule::whereIn('id', $checkedIds)->delete();
 
